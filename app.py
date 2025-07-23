@@ -499,6 +499,68 @@ with tab1:
         **create_chart_config()
     )
     st.plotly_chart(fig, use_container_width=True)
+    
+    # Insights Section
+    st.markdown('<h3 class="section-header">💡 Key Insights</h3>', unsafe_allow_html=True)
+    
+    # Calculate insights
+    total_tweets = len(filtered_data)
+    positive_tweets = len(filtered_data[filtered_data['Predicted_Sentiment'] == 'Positive'])
+    negative_tweets = len(filtered_data[filtered_data['Predicted_Sentiment'] == 'Negative'])
+    neutral_tweets = len(filtered_data[filtered_data['Predicted_Sentiment'] == 'Neutral'])
+    
+    # Find top airline by positive sentiment
+    airline_positive = filtered_data[filtered_data['Predicted_Sentiment'] == 'Positive']['Airline'].value_counts()
+    top_positive_airline = airline_positive.index[0] if len(airline_positive) > 0 else "N/A"
+    
+    # Find most active hour
+    peak_hour = filtered_data['hour'].value_counts().index[0] if len(filtered_data) > 0 else "N/A"
+    
+    # Find average tweet length
+    avg_tweet_length = filtered_data['tweet_content'].str.len().mean()
+    
+    # Find average confidence
+    avg_confidence = filtered_data['Sentiment_Confidence'].mean() * 100
+    
+    # Create insights cards
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown(f"""
+        <div class="metric-card">
+            <h4 style="color: #00d4ff; margin: 0;">📊 Overall Sentiment</h4>
+            <p style="color: #fafafa; margin: 0.5rem 0;">Positive: {positive_tweets:,} tweets ({positive_tweets/total_tweets*100:.1f}%)</p>
+            <p style="color: #fafafa; margin: 0.5rem 0;">Negative: {negative_tweets:,} tweets ({negative_tweets/total_tweets*100:.1f}%)</p>
+            <p style="color: #fafafa; margin: 0.5rem 0;">Neutral: {neutral_tweets:,} tweets ({neutral_tweets/total_tweets*100:.1f}%)</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown(f"""
+        <div class="metric-card">
+            <h4 style="color: #ff6b35; margin: 0;">🏆 Top Performer</h4>
+            <p style="color: #fafafa; margin: 0.5rem 0;">Most Positive: <strong>{top_positive_airline}</strong></p>
+            <p style="color: #b0b0b0; margin: 0.5rem 0;">Leading with highest positive sentiment ratio</p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown(f"""
+        <div class="metric-card">
+            <h4 style="color: #ffd700; margin: 0;">⏰ Activity Patterns</h4>
+            <p style="color: #fafafa; margin: 0.5rem 0;">Peak Hour: <strong>{peak_hour}:00</strong></p>
+            <p style="color: #fafafa; margin: 0.5rem 0;">Avg Tweet Length: <strong>{avg_tweet_length:.0f} characters</strong></p>
+            <p style="color: #fafafa; margin: 0.5rem 0;">Confidence: <strong>{avg_confidence:.1f}%</strong></p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown(f"""
+        <div class="metric-card">
+            <h4 style="color: #6c757d; margin: 0;">📈 Data Quality</h4>
+            <p style="color: #fafafa; margin: 0.5rem 0;">Total Tweets: <strong>{total_tweets:,}</strong></p>
+            <p style="color: #fafafa; margin: 0.5rem 0;">Airlines Covered: <strong>{len(filtered_data['Airline'].unique())}</strong></p>
+            <p style="color: #b0b0b0; margin: 0.5rem 0;">Real-time sentiment analysis</p>
+        </div>
+        """, unsafe_allow_html=True)
 
 # Tab 2: Trends & Analytics
 with tab2:
@@ -617,20 +679,6 @@ with tab3:
 with tab4:
     st.markdown('<h2 class="section-header">📝 Content Analysis</h2>', unsafe_allow_html=True)
     
-    if st.button("🎮 Play Word Association Game!", key="word_game"):
-        word_games = [
-            "🔤 Try to guess the most common hashtag!",
-            "📝 Can you spot the trending keywords?",
-            "🎯 Which airline gets mentioned most?",
-            "💬 What's the average tweet length?",
-            "🏷️ Popular hashtags reveal trending topics!",
-            "📊 Word clouds show what people talk about!",
-            "🎪 Content analysis reveals customer concerns!",
-            "🔍 Text patterns show sentiment drivers!"
-        ]
-        st.balloons()
-        st.warning(f"🎮 {random.choice(word_games)}")
-    
     # Hashtag analysis
     st.markdown('<h3 class="section-header">Hashtag Analysis</h3>', unsafe_allow_html=True)
     
@@ -690,20 +738,6 @@ with tab4:
 # Tab 5: Deep Dive
 with tab5:
     st.markdown('<h2 class="section-header">🔍 Deep Dive Analysis</h2>', unsafe_allow_html=True)
-    
-    if st.button("🎲 Roll the Data Dice!", key="data_dice"):
-        data_games = [
-            "🎯 Try filtering by different confidence levels!",
-            "📊 Explore the relationship between tweet length and sentiment!",
-            "🔍 Find the most engaging tweets in the dataset!",
-            "🎪 Discover patterns in airline mentions!",
-            "📈 Analyze how sentiment changes over time!",
-            "🌍 Explore geographic patterns in the data!",
-            "💬 Look for trending hashtags and topics!",
-            "🎨 Visualize the data in different ways!"
-        ]
-        st.balloons()
-        st.success(f"🎲 {random.choice(data_games)}")
     
     # Sample tweets display
     st.markdown('<h3 class="section-header">Sample Tweets by Sentiment</h3>', unsafe_allow_html=True)
