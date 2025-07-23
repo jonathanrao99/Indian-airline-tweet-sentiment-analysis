@@ -21,6 +21,8 @@
 
 A **super cool** sentiment analysis dashboard that analyzes tweets about Indian airlines in real-time. Think of it as your personal social media analyst! 📊
 
+![Dashboard Overview](Dashboard.png)
+
 ### ✨ What You Get
 - 📊 **Real-time sentiment analysis**
 - 📈 **Interactive visualizations & trends**
@@ -41,10 +43,10 @@ git clone <your-repo-url>
 cd Indian-airline-tweet-sentiment-analysis
 
 # 2. Install stuff
-pip install -r requirements_optimized.txt
+pip install -r requirements.txt
 
 # 3. Run it!
-streamlit run app_optimized.py
+streamlit run app.py
 ```
 
 **That's it!** 🎉
@@ -55,7 +57,7 @@ streamlit run app_optimized.py
 
 ### Option 1: Streamlit Dashboard (Recommended)
 ```bash
-streamlit run app_optimized.py
+streamlit run app.py
 ```
 *Perfect for interactive analysis and exploration*
 
@@ -91,11 +93,11 @@ python tweet.py
 
 ```
 Indian-airline-tweet-sentiment-analysis/
-├── ✈️ app_optimized.py              # Main dashboard (optimized)
+├── ✈️ app.py                        # Main dashboard
 ├── 📊 airplane_tweet_analysis.ipynb  # Jupyter analysis
 ├── 🐍 tweet.py                      # Sentiment analysis script
 ├── 🐦 twitter.py                    # Single tweet analysis
-├── 📋 requirements_optimized.txt     # Lightweight dependencies
+├── 📋 requirements.txt              # Dependencies
 ├── 📄 sentiment_analyzed_data.csv   # Processed dataset
 ├── 📚 README.md                     # This file
 └── 🗂️ Demo/                         # Screenshots & examples
@@ -111,11 +113,15 @@ Indian-airline-tweet-sentiment-analysis/
 - Airline performance overview
 - Interactive filters and controls
 
+![Sentiment Overview](Sentiment.png)
+
 ### 📈 **Trends & Analytics**
 - Temporal sentiment trends
 - Hourly activity patterns
 - Weekly sentiment analysis
 - Time-series visualizations
+
+![Temporal Trends](Trends.png)
 
 ### 🏢 **Airline Comparison**
 - Performance metrics comparison
@@ -123,17 +129,23 @@ Indian-airline-tweet-sentiment-analysis/
 - Engagement analysis
 - Competitive insights
 
+![Airline Performance](Performance.png)
+
 ### 📝 **Content Analysis**
 - Hashtag frequency analysis
 - Tweet length distribution
 - Content patterns by sentiment
 - Trending topics identification
 
+![Content Analysis](TweetAnalysis.png)
+
 ### 🔍 **Deep Dive Explorer**
 - Sample tweet viewer
 - Advanced filtering options
 - Confidence score analysis
 - Data export functionality
+
+![Deep Dive Analysis](Tweets.png)
 
 ---
 
@@ -151,13 +163,13 @@ Indian-airline-tweet-sentiment-analysis/
 ## 🐛 Troubleshooting
 
 **Problem**: `ModuleNotFoundError: No module named 'streamlit'`
-**Solution**: `pip install -r requirements_optimized.txt`
+**Solution**: `pip install -r requirements.txt`
 
 **Problem**: Dashboard not loading
 **Solution**: Check if `sentiment_analyzed_data.csv` exists in the directory
 
 **Problem**: Slow performance
-**Solution**: Use the optimized version (`app_optimized.py`)
+**Solution**: The app is already optimized for speed!
 
 **Problem**: Charts not displaying
 **Solution**: Ensure Plotly is installed: `pip install plotly`
