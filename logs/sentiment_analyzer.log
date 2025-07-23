@@ -1,0 +1,18 @@
+2025-07-22 20:27:01,108 - sentiment_analyzer - INFO - Initializing sentiment analyzer with model: cardiffnlp/twitter-roberta-base-sentiment
+2025-07-22 20:27:01,109 - sentiment_analyzer - INFO - Using device: cpu
+2025-07-22 20:27:22,814 - sentiment_analyzer - INFO - Model loaded successfully
+2025-07-22 20:27:22,815 - sentiment_analyzer - INFO - Starting sentiment analysis for dataset: E:\indiantweet\Indian-airline-tweet-sentiment-analysis\indianairline.csv
+2025-07-22 20:27:22,888 - sentiment_analyzer - INFO - Processing 6829 tweets in batches of 32
+2025-07-22 20:36:44,402 - sentiment_analyzer - INFO - Sentiment analysis completed successfully
+2025-07-22 20:36:44,402 - sentiment_analyzer - INFO - Sentiment distribution: {'Neutral': np.int64(3642), 'Negative': np.int64(2550), 'Positive': np.int64(637)}
+2025-07-22 20:37:13,350 - sentiment_analyzer - INFO - Initializing sentiment analyzer with model: cardiffnlp/twitter-roberta-base-sentiment
+2025-07-22 20:37:13,350 - sentiment_analyzer - INFO - Using device: cpu
+2025-07-22 20:37:18,360 - sentiment_analyzer - INFO - Model loaded successfully
+2025-07-22 20:37:18,466 - sentiment_analyzer - INFO - Processing 3 tweets in batches of 2
+2025-07-22 20:37:18,691 - sentiment_analyzer - INFO - Initializing sentiment analyzer with model: cardiffnlp/twitter-roberta-base-sentiment
+2025-07-22 20:37:18,691 - sentiment_analyzer - INFO - Using device: cpu
+2025-07-22 20:37:19,542 - sentiment_analyzer - INFO - Model loaded successfully
+2025-07-22 20:37:19,542 - sentiment_analyzer - INFO - Processing 50 tweets in batches of 16
+2025-07-22 20:42:56,343 - sentiment_analyzer - INFO - Initializing sentiment analyzer with model: cardiffnlp/twitter-roberta-base-sentiment
+2025-07-22 20:42:56,344 - sentiment_analyzer - INFO - Using device: cpu
+2025-07-22 20:43:00,543 - sentiment_analyzer - INFO - Model loaded successfully

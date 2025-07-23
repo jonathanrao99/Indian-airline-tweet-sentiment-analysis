@@ -1,0 +1,18 @@
+2025-07-22 20:27:01,058 - utils - INFO - Loading data from E:\indiantweet\Indian-airline-tweet-sentiment-analysis\indianairline.csv
+2025-07-22 20:27:01,100 - utils - INFO - Successfully loaded 6829 rows
+2025-07-22 20:27:22,816 - utils - INFO - Loading data from E:\indiantweet\Indian-airline-tweet-sentiment-analysis\indianairline.csv
+2025-07-22 20:27:22,847 - utils - INFO - Successfully loaded 6829 rows
+2025-07-22 20:27:22,857 - utils - INFO - Removed 0 duplicate rows
+2025-07-22 20:27:22,861 - utils - INFO - Removed rows with missing tweet content. Remaining: 6829 rows
+2025-07-22 20:27:22,888 - utils - INFO - Converted date column and removed invalid dates. Remaining: 6829 rows
+2025-07-22 20:36:44,309 - utils - INFO - Saving data to E:\indiantweet\Indian-airline-tweet-sentiment-analysis\sentiment_analyzed_data.csv
+2025-07-22 20:36:44,401 - utils - INFO - Successfully saved 6829 rows
+2025-07-22 20:37:13,291 - utils - INFO - Loading data from E:\indiantweet\Indian-airline-tweet-sentiment-analysis\indianairline.csv
+2025-07-22 20:37:13,336 - utils - INFO - Successfully loaded 6829 rows
+2025-07-22 20:37:18,615 - utils - INFO - Loading data from E:\indiantweet\Indian-airline-tweet-sentiment-analysis\indianairline.csv
+2025-07-22 20:37:18,657 - utils - INFO - Successfully loaded 6829 rows
+2025-07-22 20:37:18,669 - utils - INFO - Removed 0 duplicate rows
+2025-07-22 20:37:18,671 - utils - INFO - Removed rows with missing tweet content. Remaining: 6829 rows
+2025-07-22 20:37:18,689 - utils - INFO - Converted date column and removed invalid dates. Remaining: 6829 rows
+2025-07-22 20:42:56,253 - utils - INFO - Loading data from E:\indiantweet\Indian-airline-tweet-sentiment-analysis\sentiment_analyzed_data.csv
+2025-07-22 20:42:56,313 - utils - INFO - Successfully loaded 6829 rows
