@@ -9,7 +9,7 @@
 
 **Analyze airline sentiment like a pro! 🚀**
 
-*Real-time sentiment analysis dashboard for Indian airline tweets with style*
+*Sentiment analysis dashboard for Indian airline tweets with style*
 
 </div>
 
@@ -17,7 +17,7 @@
 
 ## 🎯 What's This?
 
-A **super cool** sentiment analysis dashboard that analyzes tweets about Indian airlines in real-time. Think of it as your personal social media analyst that works 24/7! 📊
+A **super cool** sentiment analysis dashboard that analyzes tweets about Indian airlines in real-time. Think of it as your personal social media analyst! 📊
 
 ### ✨ What You Get
 - 📊 **Real-time sentiment analysis**
@@ -223,16 +223,16 @@ Indian-airline-tweet-sentiment-analysis/
 ### 🌟 Star the Repository
 If you find this project helpful, please give it a ⭐ on GitHub!
 
-[![GitHub stars](https://img.shields.io/github/stars/yourusername/Indian-airline-tweet-sentiment-analysis?style=social)](https://github.com/yourusername/Indian-airline-tweet-sentiment-analysis)
+[![GitHub stars](https://img.shields.io/github/stars/jonathanrao99/Indian-airline-tweet-sentiment-analysis?style=social)](https://github.com/jonathanrao99/Indian-airline-tweet-sentiment-analysis)
 
 ### 📞 Connect & Support
-[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/yourusername)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/yourusername)
-[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-support%20me-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/yourusername)
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/jonathanrao99)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/jonathanrao99)
+[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-support%20me-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/jonathanthota)
 
 ---
 
-**Made with ❤️ and ☕ by [Your Name]**
+**Made with ❤️ and ☕ by Jonathan Thota**
 
 *Analyzing airline sentiment, one tweet at a time! ✈️*
 
