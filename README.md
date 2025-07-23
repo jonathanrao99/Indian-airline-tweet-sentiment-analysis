@@ -11,6 +11,8 @@
 
 *Sentiment analysis dashboard for Indian airline tweets with style*
 
+**🌐 [Live Web App](https://indianplanesentiment.streamlit.app/)**
+
 </div>
 
 ---
