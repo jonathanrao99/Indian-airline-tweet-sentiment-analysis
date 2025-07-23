@@ -268,7 +268,7 @@ st.markdown("""
 def load_data():
     """Load and preprocess data with caching"""
     try:
-        data = pd.read_csv('sentiment_analyzed_data.csv', encoding='latin-1')
+data = pd.read_csv('sentiment_analyzed_data.csv', encoding='latin-1')
         data['date'] = pd.to_datetime(data['date'])
         data['Date'] = data['date']
         data['tweet_location'] = data['tweet_location'].fillna('Unknown')
@@ -700,7 +700,7 @@ with tab4:
         )
         fig.update_layout(height=400, **create_chart_config())
         st.plotly_chart(fig, use_container_width=True)
-    else:
+else:
         st.info("No hashtags found in the selected data.")
     
     # Tweet length analysis

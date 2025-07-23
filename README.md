@@ -220,6 +220,25 @@ Indian-airline-tweet-sentiment-analysis/
 
 ---
 
+## 📄 License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+### What this means:
+- ✅ **Free to use** - Anyone can use this code for any purpose
+- ✅ **Free to modify** - Feel free to customize and improve
+- ✅ **Free to distribute** - Share with others as you wish
+- ✅ **Commercial use allowed** - Use in commercial projects
+- ✅ **Attribution required** - Just keep the license notice
+
+### Quick License Summary:
+```
+MIT License - Feel free to use this project however you want!
+Just keep the license file and copyright notice intact.
+```
+
+---
+
 <div align="center">
 
 ### 🌟 Star the Repository
