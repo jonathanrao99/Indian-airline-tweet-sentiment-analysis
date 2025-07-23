@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
-from datetime import datetime, timedelta
+from datetime import datetime
 import re
 from collections import Counter
 import random
@@ -18,10 +18,9 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for improved dark theme styling with fun animations
+# Custom CSS for dark theme with animations
 st.markdown("""
 <style>
-    /* Global dark theme styling */
     .main {
         background: linear-gradient(135deg, #0e1117 0%, #1a1a2e 50%, #16213e 100%);
         color: #fafafa;
@@ -39,7 +38,6 @@ st.markdown("""
         animation: gradientShift 10s ease-in-out infinite;
     }
     
-    /* Header styling with animations */
     .main-header {
         font-size: 3.5rem;
         font-weight: bold;
@@ -68,26 +66,10 @@ st.markdown("""
     }
     
     @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
     }
     
-    /* Sidebar styling */
-    .css-1d391kg {
-        background-color: #1a1a1a;
-    }
-    
-    .css-1lcbmhc {
-        background-color: #1a1a1a;
-    }
-    
-    /* Metric cards with cool effects */
     .metric-card {
         background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
         padding: 1.5rem;
@@ -147,17 +129,10 @@ st.markdown("""
     }
     
     @keyframes slideInLeft {
-        from {
-            opacity: 0;
-            transform: translateX(-20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
+        from { opacity: 0; transform: translateX(-20px); }
+        to { opacity: 1; transform: translateX(0); }
     }
     
-    /* Airline cards */
     .airline-card {
         background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
         padding: 1.5rem;
@@ -177,7 +152,6 @@ st.markdown("""
         margin: 0.25rem 0;
     }
     
-    /* Tab styling with cool effects */
     .stTabs [data-baseweb="tab-list"] {
         gap: 8px;
         background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
@@ -235,7 +209,6 @@ st.markdown("""
         to { box-shadow: 0 4px 20px rgba(0, 212, 255, 0.6); }
     }
     
-    /* Section headers */
     .section-header {
         color: #ffffff;
         font-size: 1.5rem;
@@ -245,7 +218,6 @@ st.markdown("""
         border-bottom: 2px solid #00d4ff;
     }
     
-    /* Sidebar headers */
     .sidebar-header {
         color: #00d4ff;
         font-size: 1.2rem;
@@ -253,7 +225,6 @@ st.markdown("""
         margin-bottom: 1rem;
     }
     
-    /* Filter labels */
     .filter-label {
         color: #b0b0b0;
         font-size: 0.9rem;
@@ -261,7 +232,6 @@ st.markdown("""
         font-weight: 500;
     }
     
-    /* Button styling */
     .stButton > button {
         background: linear-gradient(135deg, #00d4ff, #0099cc);
         color: white;
@@ -278,7 +248,6 @@ st.markdown("""
         box-shadow: 0 4px 8px rgba(0, 212, 255, 0.3);
     }
     
-    /* Footer styling */
     .footer {
         text-align: center;
         color: #666;
@@ -287,60 +256,63 @@ st.markdown("""
         margin-top: 2rem;
     }
     
-    /* Responsive design */
     @media (max-width: 768px) {
-        .main-header {
-            font-size: 2rem;
-        }
-        
-        .metric-card {
-            padding: 1rem;
-        }
-        
-        .metric-value {
-            font-size: 1.5rem;
-        }
+        .main-header { font-size: 2rem; }
+        .metric-card { padding: 1rem; }
+        .metric-value { font-size: 1.5rem; }
     }
 </style>
 """, unsafe_allow_html=True)
 
-# Load and preprocess data
-@st.cache_data
+# Utility functions
 def load_data():
+    """Load and preprocess data with caching"""
     try:
         data = pd.read_csv('sentiment_analyzed_data.csv', encoding='latin-1')
-        
-        # Clean and preprocess data
         data['date'] = pd.to_datetime(data['date'])
         data['Date'] = data['date']
-        
-        # Handle missing values
         data['tweet_location'] = data['tweet_location'].fillna('Unknown')
         data['latitude'] = pd.to_numeric(data['latitude'], errors='coerce')
         data['longitude'] = pd.to_numeric(data['longitude'], errors='coerce')
-        
-        # Create additional features
         data['hour'] = data['date'].dt.hour
         data['day_of_week'] = data['date'].dt.day_name()
         data['month'] = data['date'].dt.month
         data['year'] = data['date'].dt.year
-        
-        # Clean airline names
         data['Airline'] = data['Airline'].str.title()
-        
         return data
     except Exception as e:
         st.error(f"Error loading data: {e}")
         return None
 
+def extract_hashtags(text):
+    """Extract hashtags from text"""
+    if pd.isna(text):
+        return []
+    hashtags = re.findall(r'#\w+', str(text))
+    return [tag.lower() for tag in hashtags]
+
+def create_chart_config():
+    """Create consistent chart configuration"""
+    return {
+        'paper_bgcolor': 'rgba(0,0,0,0)',
+        'plot_bgcolor': 'rgba(0,0,0,0)',
+        'font': dict(color='#fafafa'),
+        'xaxis': dict(gridcolor='#333'),
+        'yaxis': dict(gridcolor='#333')
+    }
+
 # Load data
-data = load_data()
+@st.cache_data
+def cached_load_data():
+    return load_data()
+
+data = cached_load_data()
 
 if data is None:
-    st.error("Failed to load data. Please check if 'sentiment_analyzed_data.csv' exists in the current directory.")
+    st.error("Failed to load data. Please check if 'sentiment_analyzed_data.csv' exists.")
     st.stop()
 
-# Main header with fun elements
+# Main header
 st.markdown('<h1 class="main-header">✈️ SkySentiment Dashboard</h1>', unsafe_allow_html=True)
 st.markdown('<p class="subtitle">🚀 Comprehensive Indian Airline Tweet Sentiment Analysis Platform 🚀</p>', unsafe_allow_html=True)
 
@@ -348,7 +320,7 @@ st.markdown('<p class="subtitle">🚀 Comprehensive Indian Airline Tweet Sentime
 st.sidebar.markdown('<h3 class="sidebar-header">🎛️ Dashboard Controls</h3>', unsafe_allow_html=True)
 st.sidebar.markdown("---")
 
-# Date range filter
+# Filters
 st.sidebar.markdown('<p class="filter-label">📅 Date Range</p>', unsafe_allow_html=True)
 date_range = st.sidebar.date_input(
     "Select Date Range",
@@ -358,7 +330,6 @@ date_range = st.sidebar.date_input(
     label_visibility="collapsed"
 )
 
-# Airline filter
 st.sidebar.markdown('<p class="filter-label">🛫 Airlines</p>', unsafe_allow_html=True)
 all_airlines = ['All'] + sorted(data['Airline'].unique().tolist())
 selected_airlines = st.sidebar.multiselect(
@@ -368,7 +339,6 @@ selected_airlines = st.sidebar.multiselect(
     label_visibility="collapsed"
 )
 
-# Sentiment filter
 st.sidebar.markdown('<p class="filter-label">😊 Sentiment</p>', unsafe_allow_html=True)
 sentiment_options = ['All', 'Positive', 'Negative', 'Neutral']
 selected_sentiments = st.sidebar.multiselect(
@@ -406,7 +376,7 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs([
 with tab1:
     st.markdown('<h2 class="section-header">📊 Executive Summary</h2>', unsafe_allow_html=True)
     
-    # Fun interactive element - Click to reveal insights
+    # Fun interactive element
     if st.button("🎲 Click for a Random Insight!", key="random_insight"):
         insights = [
             "🌟 Did you know? Most tweets are posted during business hours!",
@@ -421,7 +391,7 @@ with tab1:
         st.balloons()
         st.success(f"🎉 {random.choice(insights)}")
     
-    # Key metrics row
+    # Key metrics
     col1, col2, col3, col4 = st.columns(4)
     
     with col1:
@@ -481,9 +451,7 @@ with tab1:
             title="",
             showlegend=True,
             height=400,
-            paper_bgcolor='rgba(0,0,0,0)',
-            plot_bgcolor='rgba(0,0,0,0)',
-            font=dict(color='#fafafa')
+            **create_chart_config()
         )
         st.plotly_chart(fig, use_container_width=True)
     
@@ -528,11 +496,7 @@ with tab1:
         xaxis_title="Airline",
         yaxis_title="Percentage (%)",
         height=400,
-        paper_bgcolor='rgba(0,0,0,0)',
-        plot_bgcolor='rgba(0,0,0,0)',
-        font=dict(color='#fafafa'),
-        xaxis=dict(gridcolor='#333'),
-        yaxis=dict(gridcolor='#333')
+        **create_chart_config()
     )
     st.plotly_chart(fig, use_container_width=True)
 
@@ -540,13 +504,11 @@ with tab1:
 with tab2:
     st.markdown('<h2 class="section-header">📈 Temporal Trends & Analytics</h2>', unsafe_allow_html=True)
     
-    # Time series analysis
     col1, col2 = st.columns(2)
     
     with col1:
         st.markdown('<h3 class="section-header">Sentiment Trends Over Time</h3>', unsafe_allow_html=True)
         
-        # Daily sentiment trends
         daily_sentiment = filtered_data.groupby([filtered_data['date'].dt.date, 'Predicted_Sentiment']).size().unstack(fill_value=0)
         
         fig = px.line(
@@ -559,14 +521,7 @@ with tab2:
                 'Neutral': '#6c757d'
             }
         )
-        fig.update_layout(
-            height=400,
-            paper_bgcolor='rgba(0,0,0,0)',
-            plot_bgcolor='rgba(0,0,0,0)',
-            font=dict(color='#fafafa'),
-            xaxis=dict(gridcolor='#333'),
-            yaxis=dict(gridcolor='#333')
-        )
+        fig.update_layout(height=400, **create_chart_config())
         st.plotly_chart(fig, use_container_width=True)
     
     with col2:
@@ -581,14 +536,7 @@ with tab2:
             labels={'x': 'Hour', 'y': 'Number of Tweets'},
             color_discrete_sequence=['#00d4ff']
         )
-        fig.update_layout(
-            height=400,
-            paper_bgcolor='rgba(0,0,0,0)',
-            plot_bgcolor='rgba(0,0,0,0)',
-            font=dict(color='#fafafa'),
-            xaxis=dict(gridcolor='#333'),
-            yaxis=dict(gridcolor='#333')
-        )
+        fig.update_layout(height=400, **create_chart_config())
         st.plotly_chart(fig, use_container_width=True)
     
     # Weekly patterns
@@ -608,14 +556,7 @@ with tab2:
             'Neutral': '#6c757d'
         }
     )
-    fig.update_layout(
-        height=400,
-        paper_bgcolor='rgba(0,0,0,0)',
-        plot_bgcolor='rgba(0,0,0,0)',
-        font=dict(color='#fafafa'),
-        xaxis=dict(gridcolor='#333'),
-        yaxis=dict(gridcolor='#333')
-    )
+    fig.update_layout(height=400, **create_chart_config())
     st.plotly_chart(fig, use_container_width=True)
 
 # Tab 3: Airline Comparison
@@ -633,11 +574,9 @@ with tab3:
     airline_metrics.columns = ['Positive_Sentiment_%', 'Avg_Confidence', 'Avg_Retweets', 'Avg_Likes']
     airline_metrics['Total_Tweets'] = filtered_data['Airline'].value_counts()
     
-    # Display metrics table
     st.markdown('<h3 class="section-header">Airline Performance Metrics</h3>', unsafe_allow_html=True)
     st.dataframe(airline_metrics, use_container_width=True)
     
-    # Detailed comparison charts
     col1, col2 = st.columns(2)
     
     with col1:
@@ -655,14 +594,7 @@ with tab3:
                 'Neutral': '#6c757d'
             }
         )
-        fig.update_layout(
-            height=400,
-            paper_bgcolor='rgba(0,0,0,0)',
-            plot_bgcolor='rgba(0,0,0,0)',
-            font=dict(color='#fafafa'),
-            xaxis=dict(gridcolor='#333'),
-            yaxis=dict(gridcolor='#333')
-        )
+        fig.update_layout(height=400, **create_chart_config())
         st.plotly_chart(fig, use_container_width=True)
     
     with col2:
@@ -678,21 +610,13 @@ with tab3:
             labels={'x': 'Positive Sentiment (%)', 'y': 'Airline'},
             color_discrete_sequence=['#00d4ff']
         )
-        fig.update_layout(
-            height=400,
-            paper_bgcolor='rgba(0,0,0,0)',
-            plot_bgcolor='rgba(0,0,0,0)',
-            font=dict(color='#fafafa'),
-            xaxis=dict(gridcolor='#333'),
-            yaxis=dict(gridcolor='#333')
-        )
+        fig.update_layout(height=400, **create_chart_config())
         st.plotly_chart(fig, use_container_width=True)
 
 # Tab 4: Content Analysis
 with tab4:
     st.markdown('<h2 class="section-header">📝 Content Analysis</h2>', unsafe_allow_html=True)
     
-    # Fun content analysis game
     if st.button("🎮 Play Word Association Game!", key="word_game"):
         word_games = [
             "🔤 Try to guess the most common hashtag!",
@@ -710,10 +634,6 @@ with tab4:
     # Hashtag analysis
     st.markdown('<h3 class="section-header">Hashtag Analysis</h3>', unsafe_allow_html=True)
     
-    def extract_hashtags(text):
-        hashtags = re.findall(r'#\w+', str(text))
-        return hashtags
-    
     all_hashtags = []
     for text in filtered_data['tweet_content']:
         all_hashtags.extend(extract_hashtags(text))
@@ -730,14 +650,7 @@ with tab4:
             labels={'x': 'Count', 'y': 'Hashtag'},
             color_discrete_sequence=['#00d4ff']
         )
-        fig.update_layout(
-            height=400,
-            paper_bgcolor='rgba(0,0,0,0)',
-            plot_bgcolor='rgba(0,0,0,0)',
-            font=dict(color='#fafafa'),
-            xaxis=dict(gridcolor='#333'),
-            yaxis=dict(gridcolor='#333')
-        )
+        fig.update_layout(height=400, **create_chart_config())
         st.plotly_chart(fig, use_container_width=True)
     else:
         st.info("No hashtags found in the selected data.")
@@ -756,14 +669,7 @@ with tab4:
             labels={'x': 'Tweet Length (characters)'},
             color_discrete_sequence=['#00d4ff']
         )
-        fig.update_layout(
-            height=400,
-            paper_bgcolor='rgba(0,0,0,0)',
-            plot_bgcolor='rgba(0,0,0,0)',
-            font=dict(color='#fafafa'),
-            xaxis=dict(gridcolor='#333'),
-            yaxis=dict(gridcolor='#333')
-        )
+        fig.update_layout(height=400, **create_chart_config())
         st.plotly_chart(fig, use_container_width=True)
     
     with col2:
@@ -778,21 +684,13 @@ with tab4:
             labels={'x': 'Sentiment', 'y': 'Average Length (characters)'},
             color_discrete_sequence=['#00d4ff']
         )
-        fig.update_layout(
-            height=400,
-            paper_bgcolor='rgba(0,0,0,0)',
-            plot_bgcolor='rgba(0,0,0,0)',
-            font=dict(color='#fafafa'),
-            xaxis=dict(gridcolor='#333'),
-            yaxis=dict(gridcolor='#333')
-        )
+        fig.update_layout(height=400, **create_chart_config())
         st.plotly_chart(fig, use_container_width=True)
 
 # Tab 5: Deep Dive
 with tab5:
     st.markdown('<h2 class="section-header">🔍 Deep Dive Analysis</h2>', unsafe_allow_html=True)
     
-    # Fun data exploration game
     if st.button("🎲 Roll the Data Dice!", key="data_dice"):
         data_games = [
             "🎯 Try filtering by different confidence levels!",
@@ -863,19 +761,19 @@ with tab5:
             mime="text/csv"
         )
 
-# Footer with fun elements
+# Footer
 st.markdown("---")
 st.markdown("""
 <div class="footer">
     <p>✈️ SkySentiment Dashboard | Indian Airline Tweet Sentiment Analysis</p>
     <p>🚀 Built with Streamlit | Data updated in real-time | Made with ❤️ and ☕</p>
     <p style="font-size: 0.8rem; color: #666; margin-top: 10px;">
-        🎉 Thanks for exploring! This is the simplified version with minimal dependencies! 🎯
+        🎉 Thanks for exploring! This is the optimized version with minimal dependencies! 🎯
     </p>
 </div>
 """, unsafe_allow_html=True)
 
-# Add a fun easter egg
+# Easter egg
 if st.button("🥚 Easter Egg", key="easter_egg"):
     st.balloons()
-    st.success("🎉 You found the secret! This simplified dashboard is powered by lightweight magic! ✨") 
+    st.success("🎉 You found the secret! This optimized dashboard is powered by lightweight magic! ✨") 
