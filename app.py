@@ -8,6 +8,7 @@ import re
 from collections import Counter
 import random
 import warnings
+from xquik_source import load_xquik_posts
 warnings.filterwarnings('ignore')
 
 # Page configuration
@@ -318,6 +319,32 @@ st.markdown('<p class="subtitle">🚀 Comprehensive Indian Airline Tweet Sentime
 
 # Sidebar
 st.sidebar.markdown('<h3 class="sidebar-header">🎛️ Dashboard Controls</h3>', unsafe_allow_html=True)
+st.sidebar.markdown("---")
+
+st.sidebar.markdown('<p class="filter-label">Live X Source</p>', unsafe_allow_html=True)
+xquik_query = st.sidebar.text_input(
+    "Search X Posts",
+    value="",
+    placeholder="IndiGo flight delay",
+    label_visibility="collapsed"
+)
+xquik_limit = st.sidebar.slider("Live Post Limit", min_value=5, max_value=50, value=20, step=5)
+
+if st.sidebar.button("Load Live X Posts", key="load_xquik_posts"):
+    live_data = load_xquik_posts(xquik_query, limit=xquik_limit)
+    if live_data is None:
+        st.sidebar.info("Set XQUIK_API_KEY and enter a search query.")
+    elif live_data.empty:
+        st.sidebar.info("No live posts found.")
+    else:
+        st.session_state["xquik_live_data"] = live_data
+        st.sidebar.success(f"Loaded {len(live_data):,} posts.")
+
+xquik_live_data = st.session_state.get("xquik_live_data")
+if isinstance(xquik_live_data, pd.DataFrame) and not xquik_live_data.empty:
+    if st.sidebar.checkbox("Use live X source", value=True):
+        data = xquik_live_data
+
 st.sidebar.markdown("---")
 
 # Filters
@@ -810,4 +837,4 @@ st.markdown("""
 # Easter egg
 if st.button("🥚 Easter Egg", key="easter_egg"):
     st.balloons()
-    st.success("🎉 You found the secret! This optimized dashboard is powered by lightweight magic! ✨") 
+    st.success("🎉 You found the secret! This optimized dashboard is powered by lightweight magic! ✨")
